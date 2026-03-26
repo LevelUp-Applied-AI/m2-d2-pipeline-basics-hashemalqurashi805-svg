@@ -11,15 +11,28 @@ from drill_functions import clean_column, compute_revenue
 
 
 def test_clean_column():
-    # TODO: Create a pd.Series with at least one NaN value
-    # TODO: Call clean_column() on it
-    # TODO: Assert no NaN values remain in the result
-    # TODO: Assert the NaN was filled with the correct median value
-    pass
+   # 1. إنشاء بيانات تجريبية تحتوي على NaN
+    series = pd.Series([1, 2, np.nan, 4, 5]) 
+    # الوسيط (Median) هنا هو 3.0
+    
+    # 2. استدعاء الدالة
+    result = clean_column(series)
+    
+    # 3. التأكد من اختفاء القيم المفقودة
+    assert result.isna().sum() == 0
+    
+    # 4. التأكد أن القيمة تم استبدالها بالوسيط الصحيح (3.0)
+    assert result[2] == 3.0
 
 
 def test_compute_revenue():
-    # TODO: Create two small pd.Series (quantity and price)
-    # TODO: Call compute_revenue() on them
-    # TODO: Assert the result matches the expected element-wise product
-    pass
+    # 1. إنشاء بيانات للكمية والسعر
+    quantity = pd.Series([2, 10])
+    price = pd.Series([5, 3])
+    
+    # 2. استدعاء الدالة
+    revenue = compute_revenue(quantity, price)
+    
+    # 3. التأكد أن النتيجة مطابقة للضرب (2*5=10 و 10*3=30)
+    expected = pd.Series([10, 30])
+    pd.testing.assert_series_equal(revenue, expected)
